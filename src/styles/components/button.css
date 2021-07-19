@@ -1,0 +1,28 @@
+.button {
+  display: inline-block;
+  background-color: #1563f3;
+  /* border-radius: 30px; */
+  padding: 10px 20px;
+  min-width: 150px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.button span {
+  color: #fff;
+  font-size: 16px;
+}
+
+.btn-change {
+  min-width: 100px;
+  padding: 5px 10px;
+  background-color: #50ad50;
+}
+
+.btn-remove {
+  min-width: 100px;
+  padding: 5px 10px;
+  margin-left: 15px;
+  background-color: red;
+}
