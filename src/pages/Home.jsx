@@ -1,10 +1,13 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Drawer, IconButton, List, ListItem, ListItemText, CssBaseline, Container, Typography, TextField, FormControl, InputLabel, InputBase } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { AppBar, Toolbar, Drawer, IconButton, 
+            List, ListItem, ListItemText,  InputBase, Paper, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ClearIcon from '@material-ui/icons/Clear';
 import { Link } from 'react-router-dom'
-
+import TableBlock from './TableBlock';
 
 
 const drawerWidth = 240;
@@ -43,17 +46,28 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: drawerWidth,
     },
+    inputSearch: {
+        marginLeft: theme.spacing(1),
+        flex: 1,
+    },
+    iconButton: {
+        padding: 10,
+    },
     drawerHeader: {
         display: 'flex',
         alignItems: 'center',
         padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
     },
 
     link: {
         color: '#000'
+    },
+
+    container: {
+        width: '1000px',
+        margin: '0 auto',
     },
 
     content: {
@@ -73,65 +87,21 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
     },
 
-    form: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch',
-        }
-    },
-
-    textField: {
-        width: '100%',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        color: 'white',
-        paddingBottom: 0,
-        marginTop: 0,
-        fontWeight: 500,
-
-        '&:after': {
-            borderBottomColor: '#1563f3',
-        },
-        // backgroundColor: '#1563f3',  
-    },
-
-    inputLabel: {
-        color:'#1563f3'
-    },
-    
-    inputBase: {
-        borderRadius: 4,
-        position: 'relative',
-        backgroundColor: theme.palette.background.paper,
-        border: '1px solid #ced4da',
-        fontSize: 16,
-        padding: '10px 26px 10px 12px',
-        transition: theme.transitions.create(['border-color', 'box-shadow']),
-        fontFamily: [
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-        ].join(','),
-        '&:focus': {
-            borderRadius: 4,
-            borderColor: '#80bdff',
-            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-        },
-    },
+    contentTop: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginBottom: '50px',
+    }
 }));
 
+
+
 function Home() {
+
     const classes = useStyles();
-    const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [inputValue, setInputValue] = React.useState('')
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -145,9 +115,16 @@ function Home() {
         setSelectedIndex(index);
     };
 
+    const onChangeSearchValue = (e) => {
+        setInputValue(e.target.value)
+    }
+
+    const onClickClearInput = () => {
+        setInputValue('')
+    }
+
     return (
         <div className={classes.wrapper}>
-            <CssBaseline />
             <AppBar position="fixed" className={classes.header} >
                 <Toolbar>
                     <IconButton
@@ -208,24 +185,35 @@ function Home() {
                 </List>
             </Drawer>
             <main>
-                <Container fixed>
+                <div className={classes.container}>
                     <div className={classes.content} />
-                    <form className={classes.form} noValidate autoComplete="off">
-                        <TextField 
-                            className={classes.textField} 
-                            id="standard-basic" 
-                            label="Введите слово"
-                            type='text'
-                            // InputProps={{
-                            //     className: classes.textField
-                            // }}
-                        />
-                    </form>
-                    <FormControl className={classes.margin}>
-                        <InputLabel htmlFor="word">Введите слово</InputLabel>
-                        <InputBase className={classes.inputBase} id="word" />
-                    </FormControl>
-                </Container>
+                        <div className={classes.contentTop}>
+                            <Paper component="form" className={classes.root}>
+                                <InputBase
+                                    value={inputValue}
+                                    className={classes.inputSearch}
+                                    onChange={onChangeSearchValue}
+                                    placeholder="Поиск"
+                                    inputProps={{ 'aria-label': 'search google maps' }}
+                                />
+                                {
+                                    inputValue 
+                                        ?   <IconButton onClick={onClickClearInput} className={classes.iconButton}  aria-label="search">
+                                                <ClearIcon />
+                                            </IconButton>
+                                        :   <IconButton  className={classes.iconButton} aria-label="search" disabled>
+                                                <SearchIcon />
+                                            </IconButton>
+                                }
+                            </Paper>
+                            <Button variant="contained" color="primary" disableElevation>
+                                Добавить
+                            </Button>
+                        </div>
+                        <div className={classes.contentTable}>
+                            <TableBlock />
+                        </div>
+                </div>
             </main>
         </div>
     );

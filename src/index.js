@@ -1,18 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router  } from 'react-router-dom'
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import { CssBaseline } from '@material-ui/core';
+
 
 import './index.css';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import theme from './theme';
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
-  </React.StrictMode>,
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <React.StrictMode>
+      <Router>
+        <App />
+      </Router>
+    </React.StrictMode> 
+  </ThemeProvider>,
   document.getElementById('root')
 );
 

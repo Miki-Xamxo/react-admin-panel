@@ -1,12 +1,15 @@
 import React from 'react'
 
-import { Header, NavBar, Button, Table, TableHead, TableBody } from './components';
+import { Header, NavBar, Button, Table, TableHead, TableBody  } from './components';
+import ModalForm from './components/ModalForm';
 import Home from './pages/Home';
+import { M  } from './pages/M';
 
 function App() {
 
   const [openMenu, setOpenMenu] = React.useState(false)
   const [inputValue, setInputValue] = React.useState('')
+  const [modalWindow, setModalWindow] = React.useState(false)
 
   const onClickOpneMenu = () => {
     setOpenMenu(true)
@@ -24,9 +27,18 @@ function App() {
     setInputValue('')
   }
 
+  const onClickOpenModal = () => {
+    setModalWindow(true)
+  }
+
+  const onClickCloseModal = () => {
+    setModalWindow(false)
+  }
+
+
   return (
     <div className="app">
-      <NavBar onClickCloseMenu={onClickCloseMenu} opened={openMenu} />
+      {/* <NavBar onClickCloseMenu={onClickCloseMenu} opened={openMenu} />
 
       <Header onClickOpneMenu={onClickOpneMenu} />
 
@@ -50,7 +62,7 @@ function App() {
                   </div>
                 </form>
               </div>
-              <Button>
+              <Button onClick={onClickOpenModal}>
                 <span>Добавить</span>
               </Button>
             </div>
@@ -59,7 +71,7 @@ function App() {
                 <TableHead>
                   <tr>
                     <th>Слово</th>
-                    <th>Перевод</th>
+                    <th> Определение</th>
                     <th>Категория</th>
                     <th>Язык</th>
                     <th>Действия</th>
@@ -83,10 +95,15 @@ function App() {
                 </TableBody>
               </Table>
             </div>
+            {
+              modalWindow && <ModalForm modalWindow={modalWindow} onClickCloseModal={onClickCloseModal}></ModalForm>
+            }
+
           </div>
         </div>
       </div>
-      {/* <Home /> */}
+      <M /> */}
+      <Home />
     </div>
   );
 }

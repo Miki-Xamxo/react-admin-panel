@@ -26,3 +26,14 @@
   margin-left: 15px;
   background-color: red;
 }
+
+.form__button {
+  width: 100%;
+  border-radius: 20px;
+  margin-top: 10px;
+}
+
+.form__button:focus,
+.form__button:hover {
+  background-color: rgba(0, 113, 240, 0.7);
+}
